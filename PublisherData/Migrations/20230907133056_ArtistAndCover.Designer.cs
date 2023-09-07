@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PublisherData;
 
@@ -11,9 +12,11 @@ using PublisherData;
 namespace PublisherData.Migrations
 {
     [DbContext(typeof(PubContext))]
-    partial class PubContextModelSnapshot : ModelSnapshot
+    [Migration("20230907133056_ArtistAndCover")]
+    partial class ArtistAndCover
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -56,26 +59,6 @@ namespace PublisherData.Migrations
                     b.HasKey("ArtistId");
 
                     b.ToTable("Artists");
-
-                    b.HasData(
-                        new
-                        {
-                            ArtistId = 1,
-                            FirstName = "Pablo",
-                            LastName = "Picasso"
-                        },
-                        new
-                        {
-                            ArtistId = 2,
-                            FirstName = "Dee",
-                            LastName = "Bell"
-                        },
-                        new
-                        {
-                            ArtistId = 3,
-                            FirstName = "Katharine",
-                            LastName = "Kuharic"
-                        });
                 });
 
             modelBuilder.Entity("PublisherDomain.Author", b =>
@@ -209,26 +192,6 @@ namespace PublisherData.Migrations
                     b.HasKey("CoverId");
 
                     b.ToTable("Covers");
-
-                    b.HasData(
-                        new
-                        {
-                            CoverId = 1,
-                            DesignIdeas = "How about a left hand in the dark?",
-                            DigitalOnly = false
-                        },
-                        new
-                        {
-                            CoverId = 2,
-                            DesignIdeas = "Should we put a clock?",
-                            DigitalOnly = true
-                        },
-                        new
-                        {
-                            CoverId = 3,
-                            DesignIdeas = "A big ear in the clouds?",
-                            DigitalOnly = false
-                        });
                 });
 
             modelBuilder.Entity("ArtistCover", b =>
