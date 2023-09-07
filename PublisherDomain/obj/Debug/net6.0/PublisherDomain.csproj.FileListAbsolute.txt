@@ -1,0 +1,11 @@
+C:\Users\geesh\Documents\Coding - Learning\C#\ef-core-6-fundamentals\ef-core-6-fundamentals\demos\M02 Building Your FIrst App\Before\PublisherDomain\bin\Debug\net6.0\PublisherDomain.deps.json
+C:\Users\geesh\Documents\Coding - Learning\C#\ef-core-6-fundamentals\ef-core-6-fundamentals\demos\M02 Building Your FIrst App\Before\PublisherDomain\bin\Debug\net6.0\PublisherDomain.dll
+C:\Users\geesh\Documents\Coding - Learning\C#\ef-core-6-fundamentals\ef-core-6-fundamentals\demos\M02 Building Your FIrst App\Before\PublisherDomain\bin\Debug\net6.0\PublisherDomain.pdb
+C:\Users\geesh\Documents\Coding - Learning\C#\ef-core-6-fundamentals\ef-core-6-fundamentals\demos\M02 Building Your FIrst App\Before\PublisherDomain\obj\Debug\net6.0\PublisherDomain.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\geesh\Documents\Coding - Learning\C#\ef-core-6-fundamentals\ef-core-6-fundamentals\demos\M02 Building Your FIrst App\Before\PublisherDomain\obj\Debug\net6.0\PublisherDomain.AssemblyInfoInputs.cache
+C:\Users\geesh\Documents\Coding - Learning\C#\ef-core-6-fundamentals\ef-core-6-fundamentals\demos\M02 Building Your FIrst App\Before\PublisherDomain\obj\Debug\net6.0\PublisherDomain.AssemblyInfo.cs
+C:\Users\geesh\Documents\Coding - Learning\C#\ef-core-6-fundamentals\ef-core-6-fundamentals\demos\M02 Building Your FIrst App\Before\PublisherDomain\obj\Debug\net6.0\PublisherDomain.csproj.CoreCompileInputs.cache
+C:\Users\geesh\Documents\Coding - Learning\C#\ef-core-6-fundamentals\ef-core-6-fundamentals\demos\M02 Building Your FIrst App\Before\PublisherDomain\obj\Debug\net6.0\PublisherDomain.dll
+C:\Users\geesh\Documents\Coding - Learning\C#\ef-core-6-fundamentals\ef-core-6-fundamentals\demos\M02 Building Your FIrst App\Before\PublisherDomain\obj\Debug\net6.0\refint\PublisherDomain.dll
+C:\Users\geesh\Documents\Coding - Learning\C#\ef-core-6-fundamentals\ef-core-6-fundamentals\demos\M02 Building Your FIrst App\Before\PublisherDomain\obj\Debug\net6.0\PublisherDomain.pdb
+C:\Users\geesh\Documents\Coding - Learning\C#\ef-core-6-fundamentals\ef-core-6-fundamentals\demos\M02 Building Your FIrst App\Before\PublisherDomain\obj\Debug\net6.0\ref\PublisherDomain.dll
