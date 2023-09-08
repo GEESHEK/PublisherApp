@@ -9,6 +9,19 @@ using PublisherDomain;
 
 PubContext _context = new PubContext();
 
+//querying the view //////////////////////////////////////////////
+
+GetAuthorsByArtist();
+
+void GetAuthorsByArtist()
+{
+    var authorartists=_context.AuthorsByArtist.ToList();
+    var oneauthorartists = _context.AuthorsByArtist.FirstOrDefault();
+    var Kauthorartists = _context.AuthorsByArtist
+        .Where(a=>a.Artist.StartsWith("K")).ToList();
+    var debugView = _context.ChangeTracker.DebugView.ShortView;
+} 
+
 //Store procedures///////////////////////////////////////////////
 
 void RawSqlStoredProc()

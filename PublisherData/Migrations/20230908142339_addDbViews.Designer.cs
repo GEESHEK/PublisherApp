@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PublisherData;
 
@@ -11,9 +12,11 @@ using PublisherData;
 namespace PublisherData.Migrations
 {
     [DbContext(typeof(PubContext))]
-    partial class PubContextModelSnapshot : ModelSnapshot
+    [Migration("20230908142339_addDbViews")]
+    partial class addDbViews
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -34,7 +37,7 @@ namespace PublisherData.Migrations
 
                     b.HasIndex("CoversCoverId");
 
-                    b.ToTable("ArtistCover", (string)null);
+                    b.ToTable("ArtistCover");
                 });
 
             modelBuilder.Entity("PublisherDomain.Artist", b =>
@@ -55,7 +58,7 @@ namespace PublisherData.Migrations
 
                     b.HasKey("ArtistId");
 
-                    b.ToTable("Artists", (string)null);
+                    b.ToTable("Artists");
 
                     b.HasData(
                         new
@@ -96,7 +99,7 @@ namespace PublisherData.Migrations
 
                     b.HasKey("AuthorId");
 
-                    b.ToTable("Authors", (string)null);
+                    b.ToTable("Authors");
 
                     b.HasData(
                         new
@@ -162,7 +165,7 @@ namespace PublisherData.Migrations
 
                     b.HasIndex("AuthorId");
 
-                    b.ToTable("Books", (string)null);
+                    b.ToTable("Books");
 
                     b.HasData(
                         new
@@ -214,7 +217,7 @@ namespace PublisherData.Migrations
                     b.HasIndex("BookId")
                         .IsUnique();
 
-                    b.ToTable("Covers", (string)null);
+                    b.ToTable("Covers");
 
                     b.HasData(
                         new
