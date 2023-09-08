@@ -9,6 +9,87 @@ using PublisherDomain;
 
 PubContext _context = new PubContext();
 
+//Store procedures///////////////////////////////////////////////
+
+void RawSqlStoredProc()
+{
+    var authors = _context.Authors
+        .FromSqlRaw("AuthorsPublishedinYearRange {0}, {1}", 2010, 2015)
+        .ToList();
+}
+
+void InterpolatedSqlStoredProc()
+{
+    int start = 2010;
+    int end = 2015;
+    var authors = _context.Authors
+        .FromSqlInterpolated($"AuthorsPublishedinYearRange {start}, {end}")
+        .ToList();
+}
+
+//RAW SQL/////////////////////////////////////////////////////////////////////////////////////////
+
+void SimpleRawSQL()
+{
+    var authors = _context.Authors.FromSqlRaw("select * from authors").ToList();
+}
+
+//ConcatenatedRawSql_Unsafe(); //There is no safe way with concatentation!
+void ConcatenatedRawSql_Unsafe()
+{
+    var lastnameStart = "L";
+    var authors = _context.Authors
+        .FromSqlRaw("SELECT * FROM authors WHERE lastname LIKE '" + lastnameStart + "%'")
+        .OrderBy(a => a.LastName).TagWith("Concatenated_Unsafe").ToList();
+}
+
+//FormattedRawSql_Unsafe();
+void FormattedRawSql_Unsafe()
+{
+    var lastnameStart = "L";
+    var sql = String.Format("SELECT * FROM authors WHERE lastname LIKE '{0}%'", lastnameStart);
+    var authors = _context.Authors.FromSqlRaw(sql)
+        .OrderBy(a => a.LastName).TagWith("Formatted_Unsafe").ToList();
+}
+
+//FormattedRawSql_Safe();
+void FormattedRawSql_Safe()
+{
+    var lastnameStart = "L";
+    var authors = _context.Authors
+        .FromSqlRaw("SELECT * FROM authors WHERE lastname LIKE '{0}%'", lastnameStart)
+        .OrderBy(a => a.LastName).TagWith("Formatted_Safe").ToList();
+}
+
+//StringFromInterpolated_Unsafe();
+void StringFromInterpolated_Unsafe()
+{
+    var lastnameStart = "L";
+    string sql = $"SELECT * FROM authors WHERE lastname LIKE '{lastnameStart}%'";
+    var authors = _context.Authors.FromSqlRaw(sql)
+        .OrderBy(a => a.LastName).TagWith("Interpolated_Unsafe").ToList();
+}
+
+//StringFromInterpolated_StillUnsafe();
+void StringFromInterpolated_StillUnsafe()
+{
+    var lastnameStart = "L";
+    var authors = _context.Authors
+        .FromSqlRaw($"SELECT * FROM authors WHERE lastname LIKE '{lastnameStart}%'")
+        .OrderBy(a => a.LastName).TagWith("Interpolated_StillUnsafe").ToList();
+}
+
+//StringFromInterpolated_Safe();
+void StringFromInterpolated_Safe()
+{
+    var lastnameStart = "L";
+    var authors = _context.Authors
+        .FromSqlInterpolated($"SELECT * FROM authors WHERE lastname LIKE '{lastnameStart}%'")
+        .OrderBy(a => a.LastName).TagWith("Interpolated_Safe").ToList();
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 //this will not work, already has a cover associated with it and we aren't tracking cover here
 void AddCoverToExistingBookThatHasAnUnTrackedCover()
 {
@@ -41,6 +122,7 @@ void ProtectingFromUniqueFK()
     {
         book.Cover = new Cover { DesignIdeas = "A spirally spiral" };
     }
+
     _context.SaveChanges();
 }
 
@@ -70,7 +152,7 @@ void MultiLevelInclude()
         .ThenInclude(b => b.Cover)
         .ThenInclude(c => c.Artists)
         .FirstOrDefault(a => a.AuthorId == 1);
-    
+
     Console.WriteLine(authorGraph?.FirstName + " " + authorGraph?.LastName);
     foreach (var book in authorGraph.Books)
     {
@@ -80,7 +162,6 @@ void MultiLevelInclude()
             Console.WriteLine("Design Ideas: " + book.Cover.DesignIdeas);
             Console.Write("Artist(s):");
             book.Cover.Artists.ForEach(a => Console.Write(a.LastName + " "));
-
         }
     }
 }
@@ -89,9 +170,9 @@ void MultiLevelInclude()
 void GetAllBooksWithTheirCovers()
 {
     var booksandcovers = _context.Books.Include(b => b.Cover).ToList();
-    booksandcovers.ForEach(book => 
+    booksandcovers.ForEach(book =>
         Console.WriteLine(
-            book.Title + 
+            book.Title +
             (book.Cover == null ? ": No cover yet" : ":" + book.Cover.DesignIdeas)));
 }
 
@@ -101,7 +182,7 @@ void ReassignACover()
         .Include(c => c.Artists.Where(a => a.ArtistId == 4))
         .FirstOrDefault(c => c.CoverId == 5);
 
-    coverwithartist4.Artists.RemoveAt(0);  
+    coverwithartist4.Artists.RemoveAt(0);
     var artist3 = _context.Artists.Find(3);
     coverwithartist4.Artists.Add(artist3);
     // _context.ChangeTracker.DetectChanges();
@@ -128,7 +209,7 @@ void RetrieveAllArtistsWhoHaveCovers()
 void RetrieveAllArtistsWithTheirCovers()
 {
     var artistsWithCovers = _context.Artists.Include(a => a.Covers).ToList();
-  
+
     foreach (var a in artistsWithCovers)
     {
         Console.WriteLine($"{a.FirstName} {a.LastName}, Designs to work on:");
@@ -146,8 +227,12 @@ void RetrieveAllArtistsWithTheirCovers()
                 {
                     collaborators += $"{ca.FirstName} {ca.LastName}";
                 }
+
                 if (collaborators.Length > 0)
-                { collaborators = $"(with {collaborators})"; }
+                {
+                    collaborators = $"(with {collaborators})";
+                }
+
                 Console.WriteLine($"  *{c.DesignIdeas} {collaborators}");
             }
         }
@@ -175,7 +260,7 @@ void FindArtist()
 void CreateNewCoverAndArtistTogether()
 {
     var newArtist = new Artist { FirstName = "Kir", LastName = "Talmage" };
-    var newCover = new Cover { DesignIdeas = "We like birds!"};
+    var newCover = new Cover { DesignIdeas = "We like birds!" };
     newArtist.Covers.Add(newCover);
     _context.Artists.Add(newArtist);
     _context.SaveChanges();
@@ -218,7 +303,7 @@ void ModifyingRelatedDataWhenNotTracked()
         .FirstOrDefault(a => a.AuthorId == 5);
     author.Books[0].BasePrice = (decimal)12.00;
 
-    var newContext=new PubContext();
+    var newContext = new PubContext();
     //newContext.Books.Update(author.Books[0]);
     newContext.Entry(author.Books[0]).State = EntityState.Modified;
     var state = newContext.ChangeTracker.DebugView.ShortView;
@@ -249,7 +334,7 @@ void ModifyingRelatedDataWhenTracked()
     //calling this directly since we are not using SaveChanges() which would have done this for us.
     _context.ChangeTracker.DetectChanges();
     //capture the dubug view into a variable 
-    var state=_context.ChangeTracker.DebugView.ShortView; 
+    var state = _context.ChangeTracker.DebugView.ShortView;
 }
 
 void FilterUsingRelatedData()
@@ -306,12 +391,12 @@ void ProjectionsFilter()
 
 void EagerLoadBooksWithAuthorsPublishedSince2010()
 {
-    var publishedDateStart = new DateTime(2010,1,1);
+    var publishedDateStart = new DateTime(2010, 1, 1);
     var authors = _context.Authors.Include(a => a.Books
-        .Where(b => b.PublishDate >= publishedDateStart)
-        .OrderBy(b => b.Title))
+            .Where(b => b.PublishDate >= publishedDateStart)
+            .OrderBy(b => b.Title))
         .ToList();
-    
+
     authors.ForEach(a =>
     {
         Console.WriteLine($" {a.LastName} ({a.Books.Count})");
@@ -322,10 +407,7 @@ void EagerLoadBooksWithAuthorsPublishedSince2010()
 void EagerLoadBooksWithAuthors()
 {
     var authors = _context.Authors.Include(a => a.Books).ToList();
-    authors.ForEach(a =>
-    {
-        Console.WriteLine($" {a.LastName} ({a.Books.Count})");
-    });
+    authors.ForEach(a => { Console.WriteLine($" {a.LastName} ({a.Books.Count})"); });
 }
 
 void InsertNewAuthorWithNewBook()
@@ -343,9 +425,10 @@ void InsertNewAuthorWithNewBook()
 void InsertNewAuthorWith2NewBooks()
 {
     var author = new Author { FirstName = "Don", LastName = "Jones" };
-    author.Books.AddRange(new List<Book> {
-        new Book {Title = "The Never", PublishDate = new DateTime(2019, 12, 1) },
-        new Book {Title = "Alabaster", PublishDate = new DateTime(2019,4,1)}
+    author.Books.AddRange(new List<Book>
+    {
+        new Book { Title = "The Never", PublishDate = new DateTime(2019, 12, 1) },
+        new Book { Title = "Alabaster", PublishDate = new DateTime(2019, 4, 1) }
     });
     _context.Authors.Add(author);
     _context.SaveChanges();
@@ -360,6 +443,7 @@ void AddNewBookToExistingAuthorInMemory()
             new Book { Title = "Wool", PublishDate = new DateTime(2012, 1, 1) }
         );
     }
+
     _context.SaveChanges();
 }
 
@@ -391,7 +475,8 @@ void GetOzeki()
 
 void InsertMultipleAuthors()
 {
-    var newAuthors = new Author[]{
+    var newAuthors = new Author[]
+    {
         new Author { FirstName = "Ruth", LastName = "Ozeki" },
         new Author { FirstName = "Sofia", LastName = "Segovia" },
         new Author { FirstName = "Ursula K.", LastName = "LeGuin" },
@@ -422,7 +507,7 @@ void DeleteAnAuthor()
 void CoordinatedRetrieveAndUpdateAuthor()
 {
     var author = FindThatAuthor(3);
-    if (author?.FirstName=="Julie")
+    if (author?.FirstName == "Julie")
     {
         author.FirstName = "Julia";
         SaveThatAuthor(author);
@@ -431,7 +516,7 @@ void CoordinatedRetrieveAndUpdateAuthor()
 
 Author FindThatAuthor(int authorId)
 {
-    using var shortLivedContext = new PubContext(); 
+    using var shortLivedContext = new PubContext();
     //explicitly instantiating new pub context. No tracking when no long exist due to "using"
     return shortLivedContext.Authors.Find(authorId);
 }
