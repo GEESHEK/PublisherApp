@@ -11,8 +11,6 @@ PubContext _context = new PubContext();
 
 //querying the view //////////////////////////////////////////////
 
-GetAuthorsByArtist();
-
 void GetAuthorsByArtist()
 {
     var authorartists=_context.AuthorsByArtist.ToList();
@@ -23,6 +21,12 @@ void GetAuthorsByArtist()
 } 
 
 //Store procedures///////////////////////////////////////////////
+
+void DeleteCover(int coverId)
+{
+    var rowCount = _context.Database.ExecuteSqlRaw("DeleteCover {0}", coverId);
+    Console.WriteLine(rowCount);
+}
 
 void RawSqlStoredProc()
 {
