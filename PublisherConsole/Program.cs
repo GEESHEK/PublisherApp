@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using PublisherConsole;
 using PublisherData;
 using PublisherDomain;
 
@@ -6,6 +7,20 @@ using PublisherDomain;
 // {
 //     context.Database.EnsureCreated(); //see if the database exist
 // }
+
+void AddSomeAuthors()
+{
+    var authorList = new Dictionary<string, string>
+    {
+        { "Ruth","Ozeki" },
+        { "Sofia", "Segovia" },
+        { "Ursula K.", "LeGuin" },
+        { "Hugh",  "Howey" },
+        { "Isabelle", "Allende" }
+    };
+    var dl = new DataLogic();
+    dl.ImportAuthors(authorList);
+}
 
 PubContext _context = new PubContext();
 
