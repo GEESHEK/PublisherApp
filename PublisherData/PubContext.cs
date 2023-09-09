@@ -15,20 +15,22 @@ public class PubContext : DbContext
     public PubContext(DbContextOptions options) : base(options)
     {
     }
-
-    //Not needed, keeping it for console project
+    
     public PubContext()
     {
-        throw new NotImplementedException();
     }
 
     //don't need this method for ASP > only needed for the Console project. 
-    // protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-    // {
-    //     optionsBuilder.UseSqlServer(
-    //         "Data Source = (localdb)\\MSSQLLocalDB; Initial Catalog = PubDatabase"
-    //     ).LogTo(Console.WriteLine, new []{DbLoggerCategory.Database.Command.Name}, LogLevel.Information).EnableSensitiveDataLogging();
-    // }
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    {
+        if (!optionsBuilder.IsConfigured)
+        {
+            optionsBuilder.UseSqlServer(
+                "Data Source = (localdb)\\MSSQLLocalDB; Initial Catalog = PubDatabase"
+            ).LogTo(Console.WriteLine, new []{DbLoggerCategory.Database.Command.Name}, LogLevel.Information).EnableSensitiveDataLogging();
+        } 
+     
+    }
     
     //seeding the database. 
 

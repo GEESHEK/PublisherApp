@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PublisherData", "PublisherD
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PubAPI", "PubAPI\PubAPI.csproj", "{47D27220-C4BA-4DA0-BFC2-20A8A02D3F4D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PubAppTest", "PubAppTest\PubAppTest.csproj", "{FA7C6D12-82E1-4FC7-B5B2-FBD2FCCA5D75}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{47D27220-C4BA-4DA0-BFC2-20A8A02D3F4D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{47D27220-C4BA-4DA0-BFC2-20A8A02D3F4D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{47D27220-C4BA-4DA0-BFC2-20A8A02D3F4D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FA7C6D12-82E1-4FC7-B5B2-FBD2FCCA5D75}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FA7C6D12-82E1-4FC7-B5B2-FBD2FCCA5D75}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FA7C6D12-82E1-4FC7-B5B2-FBD2FCCA5D75}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FA7C6D12-82E1-4FC7-B5B2-FBD2FCCA5D75}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
