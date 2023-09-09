@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<Project ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup Condition=" '$(ExcludeRestorePackageImports)' != 'true' ">
+    <RestoreSuccess Condition=" '$(RestoreSuccess)' == '' ">True</RestoreSuccess>
+    <RestoreTool Condition=" '$(RestoreTool)' == '' ">NuGet</RestoreTool>
+    <ProjectAssetsFile Condition=" '$(ProjectAssetsFile)' == '' ">$(MSBuildThisFileDirectory)project.assets.json</ProjectAssetsFile>
+    <NuGetPackageRoot Condition=" '$(NuGetPackageRoot)' == '' ">$(UserProfile)\Documents\Coding - Learning\C#\ef-core-6-fundamentals\ef-core-6-fundamentals\demos\M02 Building Your FIrst App\Before\PubAPI\obj\.store\.stage\wytagpe2.n0s</NuGetPackageRoot>
+    <NuGetPackageFolders Condition=" '$(NuGetPackageFolders)' == '' ">C:\Users\geesh\Documents\Coding - Learning\C#\ef-core-6-fundamentals\ef-core-6-fundamentals\demos\M02 Building Your FIrst App\Before\PubAPI\obj\.store\.stage\wytagpe2.n0s</NuGetPackageFolders>
+    <NuGetProjectStyle Condition=" '$(NuGetProjectStyle)' == '' ">DotnetToolReference</NuGetProjectStyle>
+    <NuGetToolVersion Condition=" '$(NuGetToolVersion)' == '' ">6.7.0</NuGetToolVersion>
+  </PropertyGroup>
+  <ItemGroup Condition=" '$(ExcludeRestorePackageImports)' != 'true' ">
+    <SourceRoot Include="C:\Users\geesh\Documents\Coding - Learning\C#\ef-core-6-fundamentals\ef-core-6-fundamentals\demos\M02 Building Your FIrst App\Before\PubAPI\obj\.store\.stage\wytagpe2.n0s\" />
+  </ItemGroup>
+  <PropertyGroup Condition=" '$(ExcludeRestorePackageImports)' != 'true' ">
+    <Pkgdotnet-aspnet-codegenerator Condition=" '$(Pkgdotnet-aspnet-codegenerator)' == '' ">C:\Users\geesh\Documents\Coding - Learning\C#\ef-core-6-fundamentals\ef-core-6-fundamentals\demos\M02 Building Your FIrst App\Before\PubAPI\obj\.store\.stage\wytagpe2.n0s\dotnet-aspnet-codegenerator\7.0.9</Pkgdotnet-aspnet-codegenerator>
+  </PropertyGroup>
+</Project>

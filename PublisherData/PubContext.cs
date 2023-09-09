@@ -12,12 +12,23 @@ public class PubContext : DbContext
     public DbSet<Cover> Covers { get; set; }
     public DbSet<AuthorByArtist> AuthorsByArtist { get; set; }
 
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    public PubContext(DbContextOptions options) : base(options)
     {
-        optionsBuilder.UseSqlServer(
-            "Data Source = (localdb)\\MSSQLLocalDB; Initial Catalog = PubDatabase"
-        ).LogTo(Console.WriteLine, new []{DbLoggerCategory.Database.Command.Name}, LogLevel.Information).EnableSensitiveDataLogging();
     }
+
+    //Not needed, keeping it for console project
+    public PubContext()
+    {
+        throw new NotImplementedException();
+    }
+
+    //don't need this method for ASP > only needed for the Console project. 
+    // protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    // {
+    //     optionsBuilder.UseSqlServer(
+    //         "Data Source = (localdb)\\MSSQLLocalDB; Initial Catalog = PubDatabase"
+    //     ).LogTo(Console.WriteLine, new []{DbLoggerCategory.Database.Command.Name}, LogLevel.Information).EnableSensitiveDataLogging();
+    // }
     
     //seeding the database. 
 
