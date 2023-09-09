@@ -1,8 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using PublisherData;
@@ -23,24 +18,27 @@ namespace PubAPI.Controllers
 
         // GET: api/Authors
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Author>>> GetAuthors()
+        public async Task<ActionResult<IEnumerable<AuthorDTO>>> GetAuthors()
         {
-          if (_context.Authors == null)
-          {
-              return NotFound();
-          }
-            // return await _context.Authors.ToListAsync();
-            return await _context.Authors.Include(a => a.Books).ToListAsync();
+            if (_context.Authors == null)
+            {
+                return NotFound();
+            }
+
+            return await _context.Authors.Select(a => AuthorToDTO(a)).ToListAsync();
+
+            // return await _context.Authors.Include(a => a.Books).ToListAsync();
         }
 
         // GET: api/Authors/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Author>> GetAuthor(int id)
+        public async Task<ActionResult<AuthorDTO>> GetAuthor(int id)
         {
-          if (_context.Authors == null)
-          {
-              return NotFound();
-          }
+            if (_context.Authors == null)
+            {
+                return NotFound();
+            }
+
             var author = await _context.Authors.FindAsync(id);
 
             if (author == null)
@@ -48,19 +46,31 @@ namespace PubAPI.Controllers
                 return NotFound();
             }
 
-            return author;
+            // return author;
+            return AuthorToDTO(author);
         }
 
-        // PUT: api/Authors/5
+        private static AuthorDTO AuthorToDTO(Author author)
+        {
+            return new AuthorDTO
+            {
+                AuthorId = author.AuthorId,
+                FirstName = author.FirstName,
+                LastName = author.LastName
+            };
+        }
+
+         // PUT: api/Authors/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutAuthor(int id, Author author)
+        public async Task<IActionResult> PutAuthor(int id, AuthorDTO authorDTO)
         {
-            if (id != author.AuthorId)
+            if (id != authorDTO.AuthorId)
             {
                 return BadRequest();
             }
 
+            Author author = AuthorFromDTO(authorDTO);
             _context.Entry(author).State = EntityState.Modified;
 
             try
@@ -84,27 +94,23 @@ namespace PubAPI.Controllers
 
         // POST: api/Authors
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        // POST: api/Authors
+        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Author>> PostAuthor(Author author)
+        public async Task<ActionResult<Author>> PostAuthor(AuthorDTO authorDTO)
         {
-          if (_context.Authors == null)
-          {
-              return Problem("Entity set 'PubContext.Authors'  is null.");
-          }
+            var author = AuthorFromDTO(authorDTO);
             _context.Authors.Add(author);
             await _context.SaveChangesAsync();
 
             return CreatedAtAction("GetAuthor", new { id = author.AuthorId }, author);
         }
 
+
         // DELETE: api/Authors/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteAuthor(int id)
         {
-            if (_context.Authors == null)
-            {
-                return NotFound();
-            }
             var author = await _context.Authors.FindAsync(id);
             if (author == null)
             {
@@ -120,6 +126,16 @@ namespace PubAPI.Controllers
         private bool AuthorExists(int id)
         {
             return (_context.Authors?.Any(e => e.AuthorId == id)).GetValueOrDefault();
+        }
+        
+        private static Author AuthorFromDTO(AuthorDTO authorDTO)
+        {
+            return new Author
+            {
+                AuthorId = authorDTO.AuthorId,
+                FirstName = authorDTO.FirstName,
+                LastName = authorDTO.LastName
+            };
         }
     }
 }
